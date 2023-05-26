@@ -1,0 +1,154 @@
+CREATE DATABASE butuhUang;
+
+CREATE TABLE pengguna(
+    id_pengguna serial PRIMARY KEY,
+    nama_pengguna VARCHAR(30) NOT NULL,
+    kata_sandi VARCHAR(225) NOT NULL,
+    email VARCHAR(255) NOT NULL,
+    saldo_total BIGINT NOT NULL,
+    status_verifikasi BOOLEAN DEFAULT false,
+    token_reset VARCHAR DEFAULT NULL,
+    kode_verifikasi VARCHAR(6),
+    UNIQUE(email, nama_pengguna)
+);
+
+CREATE TABLE dompet(
+    id_dompet serial PRIMARY KEY,
+    id_pengguna INT NOT NULL,
+    nama_dompet VARCHAR(128) NOT NULL,
+    saldo BIGINT NOT NULL,
+    CONSTRAINT dompet_id_pengguna_fkey FOREIGN KEY(id_pengguna) 
+        REFERENCES pengguna(id_pengguna) MATCH SIMPLE
+        ON UPDATE NO ACTION ON DELETE SET NULL
+);
+
+CREATE TABLE transaksi(
+    id_transaksi serial PRIMARY KEY,
+    id_dompet INT NOT NULL,
+    id_pengguna INT NOT NULL,
+    tanggal_transaksi DATE NOT NULL,
+    jumlah_transaksi BIGINT NOT NULL,
+    jenis_transaksi VARCHAR NOT NULL,
+    kategori_transaksi INT NOT NULL,
+    catatan_transaksi Varchar DEFAULT NULL,
+    CONSTRAINT transaksi_id_dompet_fkey FOREIGN KEY(id_dompet)
+        REFERENCES dompet(id_dompet) ON DELETE CASCADE,
+    CONSTRAINT transaksi_kategori_transaksi_fkey FOREIGN KEY(kategori_transaksi)
+        REFERENCES tipe_transaksi(id_tipe),
+    CONSTRAINT transaksi_id_pengguna_fkey FOREIGN KEY(id_pengguna) 
+        REFERENCES pengguna(id_pengguna) MATCH SIMPLE
+        ON UPDATE NO ACTION ON DELETE SET NULL
+);
+
+
+CREATE TABLE total_transaksi (
+    id_total_transaksi SERIAL PRIMARY KEY,
+    id_dompet INT NOT NULL,
+    id_pengguna INT NOT NULL,
+    bulan DATE,
+    tahun DATE,
+    total_pemasukan BIGINT,
+    total_pengeluaran BIGINT,
+    CONSTRAINT total_transaksi_id_pengguna_fkey FOREIGN KEY(id_pengguna) 
+        REFERENCES pengguna(id_pengguna) MATCH SIMPLE
+        ON UPDATE NO ACTION ON DELETE SET NULL,
+    CONSTRAINT total_transaksi_id_dompet_fkey FOREIGN KEY (id_dompet)
+        REFERENCES dompet (id_dompet) ON DELETE CASCADE,
+    CONSTRAINT uk_total_transaksi UNIQUE (id_dompet, bulan, tahun)
+);
+CREATE INDEX idx_total_transaksi_bulan_tahun ON total_transaksi (bulan, tahun);
+
+CREATE TABLE tipe_transaksi(
+    id_tipe serial PRIMARY KEY,
+    nama_tipe VARCHAR(30) NOT NULL
+);
+INSERT INTO tipe_transaksi VALUES('1', 'Makanan & Minuman');
+INSERT INTO tipe_transaksi VALUES('2', 'Transportasi');
+INSERT INTO tipe_transaksi VALUES('3', 'Sewa');
+INSERT INTO tipe_transaksi VALUES('4', 'Tagihan Air');
+INSERT INTO tipe_transaksi VALUES('5', 'Tagihan Listrik');
+INSERT INTO tipe_transaksi VALUES('6', 'Tagihan Telepon');
+INSERT INTO tipe_transaksi VALUES('7', 'Tagihan Gas');
+INSERT INTO tipe_transaksi VALUES('8', 'Tagihan Televisi');
+INSERT INTO tipe_transaksi VALUES('9', 'Tagihan internet');
+INSERT INTO tipe_transaksi VALUES('10', 'Tagihan Lainnya');
+INSERT INTO tipe_transaksi VALUES('11', 'Perawatan Rumah');
+INSERT INTO tipe_transaksi VALUES('12', 'Perawatan Kendaraan');
+INSERT INTO tipe_transaksi VALUES('13', 'Perawatan Kesehatan');
+INSERT INTO tipe_transaksi VALUES('14', 'Asuransi');
+INSERT INTO tipe_transaksi VALUES('15', 'Pendidikan');
+INSERT INTO tipe_transaksi VALUES('16', 'Peralatan Rumah Tangga');
+INSERT INTO tipe_transaksi VALUES('17', 'Keperluan Pribadi');
+INSERT INTO tipe_transaksi VALUES('18', 'Hewan Peliharaan');
+INSERT INTO tipe_transaksi VALUES('19', 'Layanan Rumah');
+INSERT INTO tipe_transaksi VALUES('20', 'Pengeluaran Lainnya');
+INSERT INTO tipe_transaksi VALUES('21', 'Gaji');
+INSERT INTO tipe_transaksi VALUES('22', 'Pembayaran Kembali');
+INSERT INTO tipe_transaksi VALUES('23', 'Pemasukan Lainnya');
+
+CREATE TABLE tipe_pemasukan(
+    id_tipe serial PRIMARY KEY,
+    id_tipe_transaksi INT NOT NULL REFERENCES tipe_transaksi(id_tipe),
+    nama_tipe VARCHAR(30) NOT NULL
+);
+INSERT INTO tipe_pemasukan VALUES('1', '21', 'Gaji');
+INSERT INTO tipe_pemasukan VALUES('2', '22', 'Pembayaran Kembali');
+INSERT INTO tipe_pemasukan VALUES('3', '23', 'Pemasukan Lainnya');
+
+CREATE TABLE tipe_pengeluaran(
+    id_tipe serial PRIMARY KEY,
+    id_tipe_transaksi INT NOT NULL REFERENCES tipe_transaksi(id_tipe),
+    nama_tipe VARCHAR(30) NOT NULL
+);
+INSERT INTO tipe_pengeluaran VALUES('1', '1', 'Makanan & Minuman');
+INSERT INTO tipe_pengeluaran VALUES('2', '2', 'Transportasi');
+INSERT INTO tipe_pengeluaran VALUES('3', '3', 'Sewa');
+INSERT INTO tipe_pengeluaran VALUES('4', '4', 'Tagihan Air');
+INSERT INTO tipe_pengeluaran VALUES('5', '5', 'Tagihan Listrik');
+INSERT INTO tipe_pengeluaran VALUES('6', '6', 'Tagihan Telepon');
+INSERT INTO tipe_pengeluaran VALUES('7', '7', 'Tagihan Gas');
+INSERT INTO tipe_pengeluaran VALUES('8', '8', 'Tagihan Televisi');
+INSERT INTO tipe_pengeluaran VALUES('9', '9', 'Tagihan internet');
+INSERT INTO tipe_pengeluaran VALUES('10', '10', 'Tagihan Lainnya');
+INSERT INTO tipe_pengeluaran VALUES('11', '11', 'Perawatan Rumah');
+INSERT INTO tipe_pengeluaran VALUES('12', '12', 'Perawatan Kendaraan');
+INSERT INTO tipe_pengeluaran VALUES('13', '13', 'Perawatan Kesehatan');
+INSERT INTO tipe_pengeluaran VALUES('14', '14', 'Asuransi');
+INSERT INTO tipe_pengeluaran VALUES('15', '15', 'Pendidikan');
+INSERT INTO tipe_pengeluaran VALUES('16', '16', 'Peralatan Rumah Tangga');
+INSERT INTO tipe_pengeluaran VALUES('17', '17', 'Keperluan Pribadi');
+INSERT INTO tipe_pengeluaran VALUES('18', '18', 'Hewan Peliharaan');
+INSERT INTO tipe_pengeluaran VALUES('19', '19', 'Layanan Rumah');
+INSERT INTO tipe_pengeluaran VALUES('20', '20', 'Pengeluaran Lainnya');
+
+CREATE TABLE anggaran(
+    id_anggaran serial PRIMARY KEY,
+    id_dompet INT NOT NULL,
+    id_pengguna INT NOT NULL,
+    bulan DATE NOT NULL,
+    tahun DATE NOT NULL,
+    kategori_anggaran INT NOT NULL,
+    nominal_anggaran BIGINT NOT NULL,
+    CONSTRAINT anggaran_kategori_anggaran_fkey FOREIGN KEY(kategori_anggaran)
+        REFERENCES tipe_transaksi(id_tipe),
+    CONSTRAINT anggaran_id_pengguna_fkey FOREIGN KEY(id_pengguna) 
+        REFERENCES pengguna(id_pengguna) MATCH SIMPLE
+        ON UPDATE NO ACTION ON DELETE SET NULL,
+    CONSTRAINT anggaran_id_dompet_fkey FOREIGN KEY (id_dompet)
+        REFERENCES dompet (id_dompet) ON DELETE CASCADE
+);
+
+CREATE TABLE total_anggaran (
+    id_total_anggaran SERIAL PRIMARY KEY,
+    id_dompet INT NOT NULL,
+    id_pengguna INT NOT NULL,
+    bulan DATE NOT NULL,
+    tahun DATE NOT NULL,
+    nominal_anggaran BIGINT NOT NULL,
+    CONSTRAINT total_anggaran_id_pengguna_fkey FOREIGN KEY(id_pengguna) 
+        REFERENCES pengguna(id_pengguna) ON UPDATE NO ACTION ON DELETE SET NULL,
+    CONSTRAINT total_anggaran_id_dompet_fkey FOREIGN KEY (id_dompet)
+        REFERENCES dompet (id_dompet) ON DELETE CASCADE,
+    CONSTRAINT uk_total_anggaran UNIQUE (id_dompet, bulan, tahun)
+);
+CREATE INDEX idx_total_anggaran_bulan_tahun ON total_anggaran (bulan, tahun);
