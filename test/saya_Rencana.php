@@ -94,8 +94,32 @@
             $bulan = $_GET['bulan'];
             $query_total_pengeluaran = "SELECT * FROM total_transaksi WHERE id_dompet=$dompet AND bulan='$bulan-01'";
             $result_total_pengeluaran = pg_query($db, $query_total_pengeluaran);
-            $row_total_pengeluaran = pg_fetch_assoc($result_total_pengeluaran);
-            echo $row_total_pengeluaran["total_pengeluaran"];
+            if($row_total_pengeluaran = pg_fetch_assoc($result_total_pengeluaran)){
+                echo $row_total_pengeluaran["total_pengeluaran"];
+            } else {
+                echo "0";
+            }
+        ?>
+    </div>
+
+    <div>
+        <label for="sisa_anggaran"> Sisa Anggaran : </label>
+        <?php
+            $dompet = $_GET['id_dompet'];
+            $bulan = $_GET['bulan'];
+            $query_total_pengeluaran = "SELECT * FROM total_transaksi WHERE id_dompet=$dompet AND bulan='$bulan-01'";
+            $result_total_pengeluaran = pg_query($db, $query_total_pengeluaran);
+            $query_total_anggaran = "SELECT * FROM total_anggaran WHERE id_dompet=$dompet AND bulan='$bulan-01'";
+            $result_total_anggaran = pg_query($db, $query_total_anggaran);
+            if(($row_total_anggaran = pg_fetch_assoc($result_total_anggaran)) && ($row_total_pengeluaran = pg_fetch_assoc($result_total_pengeluaran))){
+                $sisa = $row_total_anggaran["nominal_anggaran"] -  $row_total_pengeluaran["total_pengeluaran"];
+                echo $sisa;
+            } elseif($row_total_anggaran = pg_fetch_assoc($result_total_anggaran)) {
+                echo $row_total_anggaran["nominal_anggaran"];
+            } elseif($row_total_pengeluaran = pg_fetch_assoc($result_total_pengeluaran)){
+                echo "-";
+                echo $row_total_pengeluaran['total_pengeluaran'];
+            }
         ?>
     </div></p>
 
