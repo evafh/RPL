@@ -23,12 +23,12 @@ if(isset($_POST['submit'])){
         $cek_nama_pengguna      = pg_num_rows($data_nama_pengguna);
 
         $sql_email              ="select * from pengguna where email = '".pg_escape_string($_POST['email'])."'";
-        $data_email             = pg_query($db,$sql_email); 
+        $data_email             = pg_query($db,$sql_email);
         $cek_email              = pg_num_rows($data_email);
 
         if(($cek_nama_pengguna > 0) || ($cek_email > 0)){
-            $row_nama_pengguna  = pg_fetch_assoc($data);
-            $row_email          = pg_fetch_assoc($edata);
+            $row_nama_pengguna  = pg_fetch_assoc($data_nama_pengguna);
+            $row_email          = pg_fetch_assoc($data_email);
 
             if($_POST["nama_pengguna"]==isset($row_nama_pengguna['nama_pengguna'])){
                 echo"<script>alert('Username Sudah Terdaftar'); window.location='form_Buat_Akun.php';</script>";

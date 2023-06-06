@@ -1,5 +1,5 @@
 <?php
-$db=pg_connect('host=localhost dbname=manage_money user=postgres password=T00thless');
+$db=pg_connect('host=localhost dbname=butuhuang user=postgres password=mikej');
 if( !$db ){
     die("Gagal terhubung dengan database: " . pg_connect_error());
 }

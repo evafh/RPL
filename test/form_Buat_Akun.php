@@ -2,44 +2,54 @@
 <html>
     <head>
         <title>Manage Money - Buat Akun</title>
+        <link rel="stylesheet" href="../css/register.css">
     </head>
-    <body>
-        <h1>Buat Akun</h1>
-        <form action="proses_Buat_Akun.php" method="post" id="buat_Akun">
-            
-            <div class="buat_Akun-field">
-                <label for="nama_pengguna">Nama Pengguna</label>
-                <input type="text" id="nama_pengguna" name="nama_pengguna" autofocus pattern="[a-z\s]+{1,128}" required>
-                <br>Contoh: bingo123
+    <body class="flex">
+        <div class="something-placeholder float-left">
+            <div class="something-content">
+                <div class="flex">
+                    <img src="..\css\wallet.svg" alt="wallet" width="150" height="150" class="item-x">
+                    <div class="item-x">Mamoy</div>
+                </div>
+                <div class="br"></div>
+                <p>Manage Money (Mamoy) adalah Website pencatat dan pengatur keuangan, ini didasarkan pada kebutuhan akan alat yang efektif dalam mengelola keuangan pribadi.</p>
+                <a href="index.php">Lihat fitur</a>
             </div>
+        </div>
 
-            <div class="buat_Akun-field">
-                <p>
-                <label for="email">Email</label>
-                <input type="text" id="email" name="email" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" title="Email tidak valid!">
-                <br>Contoh: bingo@gmail.com
-                </p>
-            </div>
+        <div class="float-right login-container">
+            <br>
+            <h1 class="item-y item-x">Buat Akun</h1>
+            <form action="proses_Buat_Akun.php" method="post" id="buat_Akun">
+                
+                <!-- <div class="buat_Akun-field"> -->
+                    <input class="buat_Akun-field" type="text" id="nama_pengguna" name="nama_pengguna" autofocus pattern="[a-z\s]+{1,128}" placeholder="Nama Pengguna" required>
+                <!-- </div> -->
 
-            <div class="buat_Akun-field">
-                <p>
-                <label for="kata_sandi">Kata Sandi</label>
-                <input type="password" id="kata_sandi" name="kata_sandi" required pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,225}" autocomplete="off" title="Password harus berisi minimal 8 atau lebih karakter yang mengandung satu angka, satu huruf kapital, dan satu huruf kecil.">
-                </p>
-            </div>
+                <!-- <div class="buat_Akun-field"> -->
+                    <input class="buat_Akun-field" type="text" id="email" name="email" placeholder="Email" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" title="Email tidak valid!">
+                <!-- </div> -->
 
-            <div class="buat_Akun-field">
-                <p>
-                <label for="konfirmasi_kata_sandi">Konfirmasi Password</label>
-                <input type="password" id="konfirmasi_kata_sandi" name="konfirmasi_kata_sandi" required autocomplete="off">
-                </p>
-            </div>
+                <!-- <div class="buat_Akun-field"> -->
+                    <input class="buat_Akun-field" type="password" id="kata_sandi" name="kata_sandi" placeholder="Kata Sandi" required pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,225}" autocomplete="off" title="Password harus berisi minimal 8 atau lebih karakter yang mengandung satu angka, satu huruf kapital, dan satu huruf kecil.">
+                <!-- </div> -->
 
-            <a href="form_Verifikasi.php"><input type="submit" name="submit" value="Register"></a>
+                <!-- <div class="buat_Akun-field"> -->
+                    <input class="buat_Akun-field" type="password" id="konfirmasi_kata_sandi" name="konfirmasi_kata_sandi" placeholder="Konfirmasi Kata Sandi" required autocomplete="off">
+                <!-- </div> -->
 
-        </form>
+                <!-- <div class="buat_Akun-submit"> -->
+                    <input class="buat_Akun-submit" type="submit" name="submit" value="Register" style="color: white;">
+                <!-- </div> -->
 
-        <p>Sudah Memiliki Akun? <a href="masuk.php">Masuk</a></p>
+                
+                
+                
+
+            </form>
+
+            <p class="item-x">Sudah Memiliki Akun? <a href="masuk.php">Masuk</a></p>
+        </div>
 
         <script>
             function validatePassword(){

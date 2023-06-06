@@ -46,27 +46,45 @@
 <html>
     <head>
         <title>Manage Money - Masuk</title>
+        <link rel="stylesheet" href="../css/register.css">
     </head>
     <body>
-        <a href="index.php"><button class="button">Halaman Utama</button></a>
-        <h1>Login</h1>
-        <form method="post">
-            <div class="login-field">
-                <label for="email">Email</label>
-                <input type="email" id="email" name="email" required>
-            </div>
 
-            <div class="login-field">
-                <label for="kata_sandi">Kata Sandi</label>
-                <input type="password" id="kata_sandi" name="kata_sandi" required>
+        <div class="flex">
+            <div class="something-placeholder float-left">
+                <div class="something-content">
+                    <div class="flex">
+                        <img src="..\css\wallet.svg" alt="wallet" width="150" height="150" class="item-x">
+                        <div class="item-x">Mamoy</div>
+                    </div>
+                    <div class="br"></div>
+                    <p>Manage Money (Mamoy) adalah Website pencatat dan pengatur keuangan, ini didasarkan pada kebutuhan akan alat yang efektif dalam mengelola keuangan pribadi.</p>
+                    <a href="index.php">Lihat fitur</a>
+                </div>
             </div>
-
-            <input type="submit" name="submit" value="Masuk">
-        </form>
-        <div class="login-signup">
-                Tidak Memiliki Akun? <a href="form_Buat_Akun.php">Daftar</a>
+            <div class="float-right login-container">
                 <br>
-                <a href="form_Lupa_Kata_Sandi.php">Lupa Kata Sandi?</a>
+                <h1>Login</h1>
+                <form method="post">
+                    <!-- <div class="buat_Akun-field"> -->
+                        <input class="buat_Akun-field" type="email" id="email" name="email" placeholder="Email" required>
+                    <!-- </div> -->
+
+                    <!-- <div class="buat_Akun-field"> -->
+                        <input class="buat_Akun-field" type="password" id="kata_sandi" name="kata_sandi" placeholder="Kata Sandi"required>
+                    <!-- </div> -->
+
+                    <!-- <div class="buat_Akun-submit"> -->
+                        <input class="buat_Akun-submit" type="submit" name="submit" value="Masuk" style="color: white;">
+                    <!-- </div> -->
+                </form>
+                <div class="login-signup">
+                    Tidak Memiliki Akun? <a href="form_Buat_Akun.php">Daftar</a>
+                    <br>
+                    <a href="form_Lupa_Kata_Sandi.php">Lupa Kata Sandi?</a>
+                </div>
+            </div>
         </div>
+        
     </body>
 </html>
